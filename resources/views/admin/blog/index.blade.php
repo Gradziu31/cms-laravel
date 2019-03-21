@@ -1,0 +1,26 @@
+@extends('admin.layout.main')
+
+@section('content')
+    <div class="breadcrumb">{{url()->current()}}</div>
+    <div class="blog">
+    <h2>All blog:</h2>
+    <ul>
+    @foreach($blog as $page)
+        <li class="mb-1 justify-content-between row">
+                <div class="page-name">{{$page->title}}</div>
+                <div class="page-action d-flex">
+                <a href="/admin/blog/{{$page->slug}}"><button class="btn btn-dark">show</button></a>
+                <a href="/admin/blog/{{$page->id}}/edit"><button class="btn btn-secondary">edit</button></a> 
+                <form action="/admin/blog/{{$page->id}}" method="post">
+                <input class="btn btn-default" type="submit" value="Delete" />
+                {!! method_field('delete') !!}
+                {!! csrf_field() !!}
+              </form>
+                </div>
+        </li>
+    @endforeach
+    </ul>
+    {{$blog->links()}}
+    </div>
+    <a href="/admin/blog/create"><button class="btn btn-success">Add new</button></a>
+@endsection
